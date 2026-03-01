@@ -2,6 +2,8 @@ import asyncio
 import json
 import os
 import shlex
+
+from atf import main2
 from keep_alive import keep_alive
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command, CommandStart
@@ -368,9 +370,13 @@ async def clear_all(message: Message):
 
 # ---------- MAIN ----------
 async def main():
-    keep_alive()   # start web server
+    # start background miner
+    asyncio.create_task(main2())
+
+    # start telegram bot
     await dp.start_polling(bot)
 
 
 if __name__ == "__main__":
+    keep_alive()          # ✅ start web server FIRST
     asyncio.run(main())

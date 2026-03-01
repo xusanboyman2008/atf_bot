@@ -38,7 +38,7 @@ async def worker(name, session):
             await asyncio.sleep(3)
 
 
-async def main():
+async def main2():
     # ✅ LIMITED connector (critical for Alwaysdata)
     connector = aiohttp.TCPConnector(
         ssl=False,
@@ -58,4 +58,4 @@ async def main():
         await asyncio.gather(*tasks)
 
 
-asyncio.run(main())
+asyncio.run(main2())
