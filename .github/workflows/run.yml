@@ -6,7 +6,7 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 720   # 6 hours max
+    timeout-minutes: 7200   # 6 hours max
 
     steps:
       - name: Checkout repo
