@@ -12,14 +12,14 @@ HEADERS = {
 }
 
 payload = {
-    "initData": "query_id=AAHgh7YIAwAAAOCHtggUCi16&user=%7B%22id%22%3A6588631008%2C%22first_name%22%3A%22%28%E2%96%BA__%E2%97%84%29%20T_T%20X_X%20xusanboyman%22%2C%22last_name%22%3A%22%F0%9F%87%BA%F0%9F%87%BF%22%2C%22username%22%3A%22xusanboyman200%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%2C%22photo_url%22%3A%22https%3A%5C%2F%5C%2Ft.me%5C%2Fi%5C%2Fuserpic%5C%2F320%5C%2FABKucBBOPE9qSGZbrWEF4xW6wrAlil-YqDxjQfABvEOlAI0lJIBU15Q2npDYdUbN.svg%22%7D&auth_date=1772333403&signature=Az6iIK-AmexRFpYTMAa5z6CmWlPQt0Oi80nzFzCTttzgYxBl6PqEJRqFzkaStpL5o8EzzeAF9KvjzQ6HM0Q4BQ&hash=d0b4d725d7e2b2c0fe70e56b481aa4f4ad53e8c4cb6077f974715a9fb75c8624",
-    "tg_id": "6588631008",
+    "initData": "query_id=AAHNpiJrAwAAAM2mImsUfrYY&user=%7B%22id%22%3A8239883981%2C%22first_name%22%3A%22%26%24%22%2C%22last_name%22%3A%22%22%2C%22username%22%3A%22qwertypast%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%2C%22photo_url%22%3A%22https%3A%5C%2F%5C%2Ft.me%5C%2Fi%5C%2Fuserpic%5C%2F320%5C%2FY8BhGx604ifqPZP7jkXhZ6WbiQI42FqMky328iuxZqJWAKfg8J2l10_KR2RyfXYm.svg%22%7D&auth_date=1772347927&signature=BCeUqiD6W92UjGs4PBDnC2xenxbvopq6C7eI_vznVNWKLfZAw8SCzRe2tcNIpcygaxnxUoHHjAvgCLGhHtPiCw&hash=af34abecc83b6cce63849ac5c9c144c36d0ab7ccd6515ac33f2d3e3932c82bdf",
+    "tg_id": "8239883981",
     "taps": 20
 }
 DATA = json.dumps(payload)
 
 # ✅ SAFE VALUES FOR SHARED HOSTING
-WORKERS = 500  # do NOT increase much
+WORKERS = 800  # do NOT increase much
 BASE_DELAY = 0  # request spacing
 
 
@@ -30,7 +30,10 @@ async def worker(name, session):
 
                 # read response so connection is reused
                 await resp.read()
-                print(resp.status)
+                res = await resp.json()
+                print(res.get('new_pending'))
+                if int(res.get('new_pending',1)) >= 2500 and resp.status == 200:
+                    break
                 if resp.status == 429:
                     await asyncio.sleep(3)
         except aiohttp.ClientError as e:
